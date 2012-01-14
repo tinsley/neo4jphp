@@ -52,7 +52,7 @@ class Client
 			return true;
 		}
 
-		return $this->runCommand(new Command\AddToIndex($this, $index, $entity, $key, $value));
+		return $this->runCommand($this->transport->addToIndex($this, $index, $entity, $key, $value));
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Client
 	 */
 	public function deleteIndex(Index $index)
 	{
-		return $this->runCommand(new Command\DeleteIndex($this, $index));
+		return $this->runCommand($this->transport->deleteIndex($this, $index));
 	}
 
 	/**
@@ -101,7 +101,7 @@ class Client
 			return true;
 		}
 
-		return $this->runCommand(new Command\DeleteNode($this, $node));
+		return $this->runCommand($this->transport->deleteNode($this, $node));
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Client
 			$this->openBatch->delete($relationship);
 			return true;
 		}
-		return $this->runCommand(new Command\DeleteRelationship($this, $relationship));
+		return $this->runCommand($this->transport->deleteRelationship($this, $relationship));
 	}
 
 	/**
@@ -141,8 +141,7 @@ class Client
 	 */
 	public function executeCypherQuery(Cypher\Query $query)
 	{
-		$command = new Command\ExecuteCypherQuery($this, $query);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->executeCypherQuery($this, $query));
 	}
 
 	/**
@@ -153,8 +152,7 @@ class Client
 	 */
 	public function executeGremlinQuery(Gremlin\Query $query)
 	{
-		$command = new Command\ExecuteGremlinQuery($this, $query);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->executeGremlinQuery($this, $query));
 	}
 
 	/**
@@ -165,8 +163,7 @@ class Client
 	 */
 	public function executePagedTraversal(Pager $pager)
 	{
-		$command = new Command\ExecutePagedTraversal($this, $pager);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->executePagedTraversal($this, $pager));
 	}
 
 	/**
@@ -179,8 +176,7 @@ class Client
 	 */
 	public function executeTraversal(Traversal $traversal, Node $startNode, $returnType)
 	{
-		$command = new Command\ExecuteTraversal($this, $traversal, $startNode, $returnType);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->executeTraversal($this, $traversal, $startNode, $returnType));
 	}
 
 	/**
@@ -217,8 +213,7 @@ class Client
 	 */
 	public function getIndexes($type)
 	{
-		$command = new Command\GetIndexes($this, $type);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->getIndexes($this, $type));
 	}
 
 	/**
@@ -268,8 +263,7 @@ class Client
 	 */
 	public function getNodeRelationships(Node $node, $types=array(), $dir=null)
 	{
-		$command = new Command\GetNodeRelationships($this, $node, $types, $dir);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->getNodeRelationships($this, $node, $types, $dir));
 	}
 
 	/**
@@ -280,8 +274,7 @@ class Client
 	 */
 	public function getPaths(PathFinder $finder)
 	{
-		$command = new Command\GetPaths($this, $finder);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->getPaths($this, $finder));
 	}
 	
 	/**

@@ -20,19 +20,17 @@ class AddToIndex extends Command
 
 
 	/**
-	 * Create an instance of this command.
+	 * Create the factory function for this command
 	 *
 	 * Provides a hook for a Transport to map command class names to objects
 	 *
-	 * @param Client $client
-	 * @param Index $index
-	 * @param PropertyContainer $entity
-	 * @param string $key
-	 * @param string $value
+	 * @return callable
 	 */
-	public static function generate(Client $client, Index $index, PropertyContainer $entity, $key, $value)
+	public static function factory()
 	{
-		return new AddToIndex($client, $index, $entity, $key, $value);
+		return function (Client $client, Index $index, PropertyContainer $entity, $key, $value) {
+			return new AddToIndex($client, $index, $entity, $key, $value);
+		};
 	}
 
 	/**

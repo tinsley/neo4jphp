@@ -15,6 +15,20 @@ class ExecuteGremlinQuery extends Command
 	protected $query = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Query $query) {
+			return new ExecuteGremlinQuery($client, $query);
+		};
+	}
+
+	/**
 	 * Set the query to execute
 	 *
 	 * @param Client $client

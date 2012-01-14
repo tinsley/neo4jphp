@@ -13,6 +13,20 @@ class GetIndexes extends Command
 	protected $type = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, $type) {
+			return new GetIndexes($client, $type);
+		};
+	}
+
+	/**
 	 * Set the type of index to retrieve
 	 *
 	 * @param Client $client

@@ -20,6 +20,20 @@ class ExecuteTraversal extends Command
 	protected $results;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Traversal $traversal, Node $node, $returnType) {
+			return new ExecuteTraversal($client, $traversal, $node, $returnType);
+		};
+	}
+
+	/**
 	 * Set the traversal to execute
 	 *
 	 * @param Client $client

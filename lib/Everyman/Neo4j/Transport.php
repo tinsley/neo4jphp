@@ -34,30 +34,37 @@ class Transport
 		$this->port = $port;
 
 		$this->commandMap = array(
-			'AddToIndex' => 'Everyman\Neo4j\Command\AddToIndex',
-			'GetNodeRelationships' => 'Everyman\Neo4j\Command\GetNodeRelationships',
+			'addToIndex' => 'Everyman\Neo4j\Command\AddToIndex',
+			'deleteIndex' => 'Everyman\Neo4j\Command\DeleteIndex',
+			'deleteNode' => 'Everyman\Neo4j\Command\DeleteNode',
+			'deleteRelationship' => 'Everyman\Neo4j\Command\DeleteRelationship',
+			'executeCypherQuery' => 'Everyman\Neo4j\Command\ExecuteCypherQuery',
+			'executeGremlinQuery' => 'Everyman\Neo4j\Command\ExecuteGremlinQuery',
+			'executePagedTraversal' => 'Everyman\Neo4j\Command\ExecutePagedTraversal',
+			'executeTraversal' => 'Everyman\Neo4j\Command\ExecuteTraversal',
+			'getIndexes' => 'Everyman\Neo4j\Command\GetIndexes',
+			'getPaths' => 'Everyman\Neo4j\Command\GetPaths',
+			'getNodeRelationships' => 'Everyman\Neo4j\Command\GetNodeRelationships',
 		);
 	}
 
 	/**
-	 * Generate a command object to perform a server action.
+	 * Return a named command object
 	 *
-	 * The first parameter is required.  Any additional parameters
-	 * become parameters to the command object's constructor. 
-	 *
-	 * @param string $type
-	 * @throws Exception if the requested command type is not found
+	 * @param string $command
+	 * @param array $args
+	 * @return Command
+	 * @throws Exception
 	 */
-	public function getCommand($type)
+	public function __call($command, $args)
 	{
-		if (!array_key_exists($type, $this->commandMap)) {
-			throw new Exception("No command found mapped to $type");
+		if (!array_key_exists($command, $this->commandMap)) {
+			throw new Exception("No command found mapped to $command");
+		} else if (!is_callable($this->commandMap[$command])) {
+			$generator = $this->commandMap[$command].'::factory';
+			$this->commandMap[$command] = call_user_func($generator);
 		}
-		
-		$commandClass = $this->commandMap[$type];
-		$args = func_get_args();
-		array_shift($args);
-		return call_user_func_array("$commandClass::generate", $args);
+		return call_user_func_array($this->commandMap[$command], $args);
 	}
 
 	/**

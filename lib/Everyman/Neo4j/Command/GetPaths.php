@@ -14,6 +14,20 @@ class GetPaths extends Command
 	protected $finder = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, PathFinder $finder) {
+			return new GetPaths($client, $finder);
+		};
+	}
+
+	/**
 	 * Set the parameters to search
 	 *
 	 * @param Client     $client

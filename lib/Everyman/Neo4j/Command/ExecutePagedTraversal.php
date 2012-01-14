@@ -12,6 +12,20 @@ class ExecutePagedTraversal extends ExecuteTraversal
 	protected $pager = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Pager $pager) {
+			return new ExecutePagedTraversal($client, $pager);
+		};
+	}
+
+	/**
 	 * Set the pager to execute
 	 *
 	 * @param Client $client

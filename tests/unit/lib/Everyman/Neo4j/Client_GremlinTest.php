@@ -8,7 +8,7 @@ class Client_GremlinTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->transport = $this->getMock('Everyman\Neo4j\Transport');
+		$this->transport = $this->getMock('Everyman\Neo4j\Transport', array('delete','get','post','put','makeRequest'));
 		$this->client = new Client($this->transport);
 	}
 

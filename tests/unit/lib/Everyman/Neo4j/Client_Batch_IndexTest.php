@@ -6,14 +6,11 @@ class Client_Batch_IndexTest extends \PHPUnit_Framework_TestCase
 	protected $transport = null;
 	protected $batch = null;
 	protected $client = null;
-	protected $endpoint = 'http://foo:1234/db/data';
+	protected $endpoint = 'http://localhost:7474/db/data';
 
 	public function setUp()
 	{
-		$this->transport = $this->getMock('Everyman\Neo4j\Transport');
-		$this->transport->expects($this->any())
-			->method('getEndpoint')
-			->will($this->returnValue($this->endpoint));
+		$this->transport = $this->getMock('Everyman\Neo4j\Transport', array('delete','get','post','put','makeRequest'));
 		$this->client = new Client($this->transport);
 
 		$this->batch = new Batch($this->client);

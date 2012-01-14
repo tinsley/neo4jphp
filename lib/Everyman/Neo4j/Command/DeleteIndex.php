@@ -6,11 +6,25 @@ use Everyman\Neo4j\Command,
 	Everyman\Neo4j\Index;
 
 /**
- * Create an index
+ * Delete an index
  */
 class DeleteIndex extends Command
 {
 	protected $index = null;
+
+	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Index $index) {
+			return new DeleteIndex($client, $index);
+		};
+	}
 
 	/**
 	 * Set the index to drive the command

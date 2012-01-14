@@ -136,12 +136,27 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 	{
 		$client = new Client($this->transport);
 		$node = new Node($client);
+		$rel = new Relationship($client);
 		$nodeIndex = new Index\NodeIndex($client, 'index-for-nodes');
+		$cypher = new Cypher\Query($client, 'foo');
+		$gremlin = new Gremlin\Query($client, 'foo');
+		$traversal = new Traversal($client);
+		$pager = new Pager($traversal, $node, 'foo');
+		$finder = new PathFinder($client);
 
 		// Command type, parameters
 		return array(
-			array('AddToIndex', array($client, $nodeIndex, $node, 'somekey', 'somevalue')),
-			array('GetNodeRelationships', array($client, $node, array('FOO'), Relationship::DirectionOut)),
+			array('addToIndex', array($client, $nodeIndex, $node, 'somekey', 'somevalue')),
+			array('deleteIndex', array($client, $nodeIndex)),
+			array('deleteNode', array($client, $node)),
+			array('deleteRelationship', array($client, $rel)),
+			array('executeCypherQuery', array($client, $cypher)),
+			array('executeGremlinQuery', array($client, $gremlin)),
+			array('executePagedTraversal', array($client, $pager)),
+			array('executeTraversal', array($client, $traversal, $node, 'FOO')),
+			array('getIndexes', array($client, 'FOO')),
+			array('getPaths', array($client, $finder)),
+			array('getNodeRelationships', array($client, $node, array('FOO'), Relationship::DirectionOut)),
 		);
 	}
 
@@ -150,9 +165,8 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetCommand_KnownCommand_ReturnsCommand($type, $parameters)
 	{
-		array_unshift($parameters, $type);
-		$command = call_user_func_array(array($this->transport, 'getCommand'), $parameters);
-		$this->assertInstanceOf('Everyman\Neo4j\Command\\'.$type, $command);
+		$command = call_user_func_array(array($this->transport, $type), $parameters);
+		$this->assertInstanceOf('Everyman\Neo4j\Command\\'.ucfirst($type), $command);
 	}
 
 	public function testGetCommand_UnknownCommand_ThrowsException()

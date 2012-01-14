@@ -9,7 +9,7 @@ class Client_CacheTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$this->transport = $this->getMock('Everyman\Neo4j\Transport');
+		$this->transport = $this->getMock('Everyman\Neo4j\Transport', array('delete','get','post','put','makeRequest'));
 		$this->cache = new Cache\Variable();
 
 		$this->client = new Client($this->transport);
