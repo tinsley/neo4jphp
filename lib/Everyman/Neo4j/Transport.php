@@ -35,6 +35,7 @@ class Transport
 
 		$this->commandMap = array(
 			'addToIndex' => 'Everyman\Neo4j\Command\AddToIndex',
+			'commitBatch' => 'Everyman\Neo4j\Command\Batch\Commit',
 			'createNode' => 'Everyman\Neo4j\Command\CreateNode',
 			'createRelationship' => 'Everyman\Neo4j\Command\CreateRelationship',
 			'deleteIndex' => 'Everyman\Neo4j\Command\DeleteIndex',

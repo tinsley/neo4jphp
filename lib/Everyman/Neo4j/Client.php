@@ -74,7 +74,7 @@ class Client
 			$this->endBatch();
 		}
 
-		return $this->runCommand(new Command\Batch\Commit($this, $batch));
+		return $this->runCommand($this->transport->commitBatch($this, $batch));
 	}
 
 	/**

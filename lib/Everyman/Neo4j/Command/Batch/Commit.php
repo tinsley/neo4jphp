@@ -13,6 +13,20 @@ class Commit extends Command
 	protected $batch = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Batch $batch) {
+			return new Commit($client, $batch);
+		};
+	}
+
+	/**
 	 * Set the batch to drive the command
 	 *
 	 * @param Client $client

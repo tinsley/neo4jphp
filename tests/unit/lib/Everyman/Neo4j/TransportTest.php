@@ -143,10 +143,12 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 		$traversal = new Traversal($client);
 		$pager = new Pager($traversal, $node, 'foo');
 		$finder = new PathFinder($client);
+		$batch = new Batch($client);
 
 		// Command type, parameters
 		return array(
 			array('addToIndex', array($client, $nodeIndex, $node, 'somekey', 'somevalue')),
+			array('commitBatch', array($client, $batch), 'Everyman\Neo4j\Command\Batch\Commit'),
 			array('createNode', array($client, $node)),
 			array('createRelationship', array($client, $rel)),
 			array('deleteIndex', array($client, $nodeIndex)),
@@ -174,10 +176,11 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider dataProvider_Commands
 	 */
-	public function testGetCommand_KnownCommand_ReturnsCommand($type, $parameters)
+	public function testGetCommand_KnownCommand_ReturnsCommand($type, $parameters, $expected=null)
 	{
+		$expected = $expected ?: 'Everyman\Neo4j\Command\\'.ucfirst($type); 
 		$command = call_user_func_array(array($this->transport, $type), $parameters);
-		$this->assertInstanceOf('Everyman\Neo4j\Command\\'.ucfirst($type), $command);
+		$this->assertInstanceOf($expected, $command);
 	}
 
 	public function testGetCommand_UnknownCommand_ThrowsException()
