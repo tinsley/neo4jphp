@@ -265,21 +265,21 @@ class GeoffTest extends \PHPUnit_Framework_TestCase
 	public function testDump_PathsGiven_NoFileDescriptor_ReturnsString()
 	{
 		$nodeA = new Node($this->client);
-		$nodeA->setId(123)->setProperties(array('foo' => 'bar','baz' => 'qux'));
+		$nodeA->useLazyLoad(false)->setId(123)->setProperties(array('foo' => 'bar','baz' => 'qux'));
 		
 		$nodeB = new Node($this->client);
-		$nodeB->setId(456)->setProperties(array('somekey' => 'somevalue'));
+		$nodeB->useLazyLoad(false)->setId(456)->setProperties(array('somekey' => 'somevalue'));
 		
 		$nodeC = new Node($this->client);
-		$nodeC->setId(789);
+		$nodeC->useLazyLoad(false)->setId(789);
 
 		$relA = new Relationship($this->client);
-		$relA->setId(987)->setType('TEST')
+		$relA->useLazyLoad(false)->setId(987)->setType('TEST')
 			->setStartNode($nodeA)->setEndNode($nodeB)
 			->setProperties(array('anotherkey' => 'anothervalue'));
 
 		$relB = new Relationship($this->client);
-		$relB->setId(654)->setType('TSET')
+		$relB->useLazyLoad(false)->setId(654)->setType('TSET')
 			->setStartNode($nodeB)->setEndNode($nodeC);
 
 		$path = new Path();
@@ -305,11 +305,11 @@ GEOFF;
 	public function testDump_PathsGiven_FileDescriptor_ReturnsDescriptor()
 	{
 		$nodeA = new Node($this->client);
-		$nodeA->setId(123)->setProperties(array('foo' => 'bar','baz' => 'qux'));
+		$nodeA->useLazyLoad(false)->setId(123)->setProperties(array('foo' => 'bar','baz' => 'qux'));
 		$nodeB = new Node($this->client);
-		$nodeB->setId(456)->setProperties(array('somekey' => 'somevalue'));
+		$nodeB->useLazyLoad(false)->setId(456)->setProperties(array('somekey' => 'somevalue'));
 		$relA = new Relationship($this->client);
-		$relA->setId(987)->setType('TEST')
+		$relA->useLazyLoad(false)->setId(987)->setType('TEST')
 			->setStartNode($nodeA)->setEndNode($nodeB)
 			->setProperties(array('anotherkey' => 'anothervalue'));
 		$path = new Path();

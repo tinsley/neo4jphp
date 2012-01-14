@@ -373,7 +373,7 @@ class Client
 			return true;
 		}
 
-		return $this->runCommand(new Command\GetNode($this, $node));
+		return $this->runCommand($this->transport->getNode($this, $node));
 	}
 
 	/**
@@ -390,7 +390,7 @@ class Client
 			return true;
 		}
 
-		return $this->runCommand(new Command\GetRelationship($this, $rel));
+		return $this->runCommand($this->transport->getRelationship($this, $rel));
 	}
 
 	/**

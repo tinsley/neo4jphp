@@ -50,6 +50,7 @@ class Transport
 			'getPaths' => 'Everyman\Neo4j\Command\GetPaths',
 			'getNodeRelationships' => 'Everyman\Neo4j\Command\GetNodeRelationships',
 			'getRelationshipTypes' => 'Everyman\Neo4j\Command\GetRelationshipTypes',
+			'getRelationship' => 'Everyman\Neo4j\Command\GetRelationship',
 			'getServerInfo' => 'Everyman\Neo4j\Command\GetServerInfo',
 			'queryIndex' => 'Everyman\Neo4j\Command\QueryIndex',
 			'removeFromIndex' => 'Everyman\Neo4j\Command\RemoveFromIndex',
