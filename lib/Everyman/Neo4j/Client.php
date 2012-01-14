@@ -332,8 +332,7 @@ class Client
 	 */
 	public function getRelationshipTypes()
 	{
-		$command = new Command\GetRelationshipTypes($this);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->getRelationshipTypes($this));
 	}
 
 	/**
@@ -345,8 +344,7 @@ class Client
 	public function getServerInfo($force=false)
 	{
 		if ($this->serverInfo === null || $force) {
-			$command = new Command\GetServerInfo($this);
-			$this->serverInfo = $this->runCommand($command);
+			$this->serverInfo = $this->runCommand($this->transport->getServerInfo($this));
 		}
 		return $this->serverInfo;
 	}
@@ -427,8 +425,7 @@ class Client
 	 */
 	public function queryIndex(Index $index, $query)
 	{
-		$command = new Command\QueryIndex($this, $index, $query);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->queryIndex($this, $index, $query));
 	}
 
 	/**
@@ -450,7 +447,7 @@ class Client
 			return true;
 		}
 
-		return $this->runCommand(new Command\RemoveFromIndex($this, $index, $entity, $key, $value));
+		return $this->runCommand($this->transport->removeFromIndex($this, $index, $entity, $key, $value));
 	}
 
 	/**
@@ -461,7 +458,7 @@ class Client
 	 */
 	public function saveIndex(Index $index)
 	{
-		return $this->runCommand(new Command\SaveIndex($this, $index));
+		return $this->runCommand($this->transport->saveIndex($this, $index));
 	}
 
 	/**
@@ -478,9 +475,9 @@ class Client
 		}
 
 		if ($node->hasId()) {
-			return $this->runCommand(new Command\UpdateNode($this, $node));
+			return $this->runCommand($this->transport->updateNode($this, $node));
 		} else {
-			return $this->runCommand(new Command\CreateNode($this, $node));
+			return $this->runCommand($this->transport->createNode($this, $node));
 		}
 	}
 
@@ -498,9 +495,9 @@ class Client
 		}
 
 		if ($rel->hasId()) {
-			return $this->runCommand(new Command\UpdateRelationship($this, $rel));
+			return $this->runCommand($this->transport->updateRelationship($this, $rel));
 		} else {
-			return $this->runCommand(new Command\CreateRelationship($this, $rel));
+			return $this->runCommand($this->transport->createRelationship($this, $rel));
 		}
 	}
 
@@ -514,8 +511,7 @@ class Client
 	 */
 	public function searchIndex(Index $index, $key, $value)
 	{
-		$command = new Command\SearchIndex($this, $index, $key, $value);
-		return $this->runCommand($command);
+		return $this->runCommand($this->transport->searchIndex($this, $index, $key, $value));
 	}
 
 	/**

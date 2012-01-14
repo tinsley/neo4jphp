@@ -19,6 +19,20 @@ class RemoveFromIndex extends Command
 	protected $value = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Index $index, PropertyContainer $entity, $key, $value) {
+			return new RemoveFromIndex($client, $index, $entity, $key, $value);
+		};
+	}
+
+	/**
 	 * Remove an entity from an index
 	 * If $value is not given, all reference of the entity for the key
 	 * are removed.

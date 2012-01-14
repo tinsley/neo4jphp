@@ -9,6 +9,20 @@ use Everyman\Neo4j\Command,
 class GetRelationshipTypes extends Command
 {
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client) {
+			return new GetRelationshipTypes($client);
+		};
+	}
+
+	/**
 	 * Return the data to pass
 	 *
 	 * @return mixed

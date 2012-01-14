@@ -13,6 +13,20 @@ use Everyman\Neo4j\Command,
 class QueryIndex extends SearchIndex
 {
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Index $index, $query) {
+			return new QueryIndex($client, $index, $query);
+		};
+	}
+
+	/**
 	 * Set the index to drive the command
 	 *
 	 * @param Client $client

@@ -18,7 +18,6 @@ class AddToIndex extends Command
 	protected $key = null;
 	protected $value = null;
 
-
 	/**
 	 * Create the factory function for this command
 	 *

@@ -13,6 +13,20 @@ class UpdateNode extends Command
 	protected $node = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Node $node) {
+			return new UpdateNode($client, $node);
+		};
+	}
+
+	/**
 	 * Set the node to drive the command
 	 *
 	 * @param Client $client

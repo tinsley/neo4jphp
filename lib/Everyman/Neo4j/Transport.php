@@ -35,6 +35,8 @@ class Transport
 
 		$this->commandMap = array(
 			'addToIndex' => 'Everyman\Neo4j\Command\AddToIndex',
+			'createNode' => 'Everyman\Neo4j\Command\CreateNode',
+			'createRelationship' => 'Everyman\Neo4j\Command\CreateRelationship',
 			'deleteIndex' => 'Everyman\Neo4j\Command\DeleteIndex',
 			'deleteNode' => 'Everyman\Neo4j\Command\DeleteNode',
 			'deleteRelationship' => 'Everyman\Neo4j\Command\DeleteRelationship',
@@ -43,8 +45,17 @@ class Transport
 			'executePagedTraversal' => 'Everyman\Neo4j\Command\ExecutePagedTraversal',
 			'executeTraversal' => 'Everyman\Neo4j\Command\ExecuteTraversal',
 			'getIndexes' => 'Everyman\Neo4j\Command\GetIndexes',
+			'getNode' => 'Everyman\Neo4j\Command\GetNode',
 			'getPaths' => 'Everyman\Neo4j\Command\GetPaths',
 			'getNodeRelationships' => 'Everyman\Neo4j\Command\GetNodeRelationships',
+			'getRelationshipTypes' => 'Everyman\Neo4j\Command\GetRelationshipTypes',
+			'getServerInfo' => 'Everyman\Neo4j\Command\GetServerInfo',
+			'queryIndex' => 'Everyman\Neo4j\Command\QueryIndex',
+			'removeFromIndex' => 'Everyman\Neo4j\Command\RemoveFromIndex',
+			'saveIndex' => 'Everyman\Neo4j\Command\SaveIndex',
+			'searchIndex' => 'Everyman\Neo4j\Command\SearchIndex',
+			'updateNode' => 'Everyman\Neo4j\Command\UpdateNode',
+			'updateRelationship' => 'Everyman\Neo4j\Command\UpdateRelationship',
 		);
 	}
 

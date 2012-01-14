@@ -13,6 +13,20 @@ class SaveIndex extends Command
 	protected $index = null;
 
 	/**
+	 * Create the factory function for this command
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @return callable
+	 */
+	public static function factory()
+	{
+		return function (Client $client, Index $index) {
+			return new SaveIndex($client, $index);
+		};
+	}
+
+	/**
 	 * Set the index to drive the command
 	 *
 	 * @param Client $client

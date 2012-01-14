@@ -147,6 +147,8 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 		// Command type, parameters
 		return array(
 			array('addToIndex', array($client, $nodeIndex, $node, 'somekey', 'somevalue')),
+			array('createNode', array($client, $node)),
+			array('createRelationship', array($client, $rel)),
 			array('deleteIndex', array($client, $nodeIndex)),
 			array('deleteNode', array($client, $node)),
 			array('deleteRelationship', array($client, $rel)),
@@ -155,8 +157,17 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 			array('executePagedTraversal', array($client, $pager)),
 			array('executeTraversal', array($client, $traversal, $node, 'FOO')),
 			array('getIndexes', array($client, 'FOO')),
+			array('getNode', array($client, $node)),
 			array('getPaths', array($client, $finder)),
 			array('getNodeRelationships', array($client, $node, array('FOO'), Relationship::DirectionOut)),
+			array('getRelationshipTypes', array($client)),
+			array('getServerInfo', array($client)),
+			array('queryIndex', array($client, $nodeIndex, 'foo')),
+			array('removeFromIndex', array($client, $nodeIndex, $node, 'somekey', 'somevalue')),
+			array('saveIndex', array($client, $nodeIndex)),
+			array('searchIndex', array($client, $nodeIndex, 'somekey', 'somevalue')),
+			array('updateNode', array($client, $node)),
+			array('updateRelationship', array($client, $rel)),
 		);
 	}
 
