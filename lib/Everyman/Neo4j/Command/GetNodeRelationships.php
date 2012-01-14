@@ -16,6 +16,21 @@ class GetNodeRelationships extends Command
 	protected $dir   = null;
 
 	/**
+	 * Create an instance of this command.
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @param Client $client
+	 * @param Node   $node
+	 * @param mixed  $types a string or array of strings
+	 * @param string $dir
+	 */
+	public static function generate(Client $client, Node $node, $types=array(), $dir=null)
+	{
+		return new GetNodeRelationships($client, $node, $types, $dir);
+	}
+
+	/**
 	 * Set the parameters to search
 	 *
 	 * @param Client $client

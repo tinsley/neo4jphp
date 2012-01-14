@@ -18,6 +18,23 @@ class AddToIndex extends Command
 	protected $key = null;
 	protected $value = null;
 
+
+	/**
+	 * Create an instance of this command.
+	 *
+	 * Provides a hook for a Transport to map command class names to objects
+	 *
+	 * @param Client $client
+	 * @param Index $index
+	 * @param PropertyContainer $entity
+	 * @param string $key
+	 * @param string $value
+	 */
+	public static function generate(Client $client, Index $index, PropertyContainer $entity, $key, $value)
+	{
+		return new AddToIndex($client, $index, $entity, $key, $value);
+	}
+
 	/**
 	 * Set the index to drive the command
 	 *

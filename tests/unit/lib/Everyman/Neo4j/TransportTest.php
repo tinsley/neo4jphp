@@ -131,4 +131,33 @@ class TransportTest extends \PHPUnit_Framework_TestCase
 		$result = $this->transport->encodeData($data);
 		$this->assertEquals($expected, $result);
 	}
+
+	public function dataProvider_Commands()
+	{
+		$client = new Client($this->transport);
+		$node = new Node($client);
+		$nodeIndex = new Index\NodeIndex($client, 'index-for-nodes');
+
+		// Command type, parameters
+		return array(
+			array('AddToIndex', array($client, $nodeIndex, $node, 'somekey', 'somevalue')),
+			array('GetNodeRelationships', array($client, $node, array('FOO'), Relationship::DirectionOut)),
+		);
+	}
+
+	/**
+	 * @dataProvider dataProvider_Commands
+	 */
+	public function testGetCommand_KnownCommand_ReturnsCommand($type, $parameters)
+	{
+		array_unshift($parameters, $type);
+		$command = call_user_func_array(array($this->transport, 'getCommand'), $parameters);
+		$this->assertInstanceOf('Everyman\Neo4j\Command\\'.$type, $command);
+	}
+
+	public function testGetCommand_UnknownCommand_ThrowsException()
+	{
+		$this->setExpectedException('Everyman\Neo4j\Exception');
+		$this->transport->getCommand('FooCommand');
+	}
 }

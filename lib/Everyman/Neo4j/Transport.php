@@ -20,6 +20,8 @@ class Transport
 
 	protected $handle = null;
 
+	protected $commandMap = array();
+
 	/**
 	 * Set the host and port of the endpoint
 	 *
@@ -30,6 +32,32 @@ class Transport
 	{
 		$this->host = $host;
 		$this->port = $port;
+
+		$this->commandMap = array(
+			'AddToIndex' => 'Everyman\Neo4j\Command\AddToIndex',
+			'GetNodeRelationships' => 'Everyman\Neo4j\Command\GetNodeRelationships',
+		);
+	}
+
+	/**
+	 * Generate a command object to perform a server action.
+	 *
+	 * The first parameter is required.  Any additional parameters
+	 * become parameters to the command object's constructor. 
+	 *
+	 * @param string $type
+	 * @throws Exception if the requested command type is not found
+	 */
+	public function getCommand($type)
+	{
+		if (!array_key_exists($type, $this->commandMap)) {
+			throw new Exception("No command found mapped to $type");
+		}
+		
+		$commandClass = $this->commandMap[$type];
+		$args = func_get_args();
+		array_shift($args);
+		return call_user_func_array("$commandClass::generate", $args);
 	}
 
 	/**
